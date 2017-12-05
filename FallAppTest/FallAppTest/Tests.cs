@@ -41,7 +41,10 @@ namespace FallAppTest
         [Test]
         public void AppLaunches()
         {
-            app.Screenshot("First screen.");
+            AppResult[] resualt = app.WaitForElement(c => c.Marked("LogInButton"), "Did not see the success message.",
+                new TimeSpan(0, 0, 0, 90, 0));
+
+            Assert.IsTrue(resualt.Length == 1);
         }
 
         [Test]
@@ -79,32 +82,27 @@ namespace FallAppTest
             Assert.IsTrue(resualt.Length == 1);
         }
 
-        /*[Test]
-        public void CallForHelpCancel()
+        [Test]
+        public void CallForHelp()
         {
-            //app.Repl();
 
-            app.EnterText(c => c.Id("NoResourceEntry-4"), "a");
-            app.EnterText(c => c.Id("NoResourceEntry-5"), "b");
-            app.Tap(c => c.All().Text("Log på"));
+            LogInCitizenUser();
 
-            app.Screenshot("First screen.");
-
-            AppResult[] helpButton = app.WaitForElement(c => c.Marked("NoResourceEntry-7"), "Did not see the success message.",
+            AppResult[] helpButton = app.WaitForElement(c => c.Marked("helpButton"), "Did not see the success message.",
                 new TimeSpan(0, 0, 0, 90, 0));
 
-            app.Tap(c => c.Id("NoResourceEntry-7"));
+            app.Tap(c => c.Marked("helpButton"));
 
-            AppResult[] respons = app.WaitForElement(c => c.Marked("NoResourceEntry-8"), "Did not see the success message.",
+            AppResult[] respons = app.WaitForElement(c => c.Marked("YesHelp"), "Did not see the success message.",
                 new TimeSpan(0, 0, 0, 90, 0));
 
-            app.Tap(c => c.Id("NoResourceEntry-8"));
+            app.Tap(c => c.Marked("YesHelp"));
 
-            AppResult[] resualt = app.WaitForElement(c => c.Marked("NoResourceEntry-7"), "Did not see the success message.",
+            AppResult[] resualt = app.WaitForElement(c => c.Marked("helpButton"), "Did not see the success message.",
                 new TimeSpan(0, 0, 0, 90, 0));
 
-            app.Repl();
-        }*/
+            Assert.IsTrue(resualt.Length == 1);
+        }
 
         [Test]
         public void LogInAsContactPerson()
